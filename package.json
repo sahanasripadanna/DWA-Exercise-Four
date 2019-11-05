@@ -13,6 +13,9 @@
   },
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
   "bugs": {
     "url": "https://github.com/sahanasripadanna/DWA-Exercise-Four/issues"
   },
