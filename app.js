@@ -1,28 +1,24 @@
-
-
-
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 4000;
 
 const indexRoute = require('./routes/index.js');
-const aboutRoute = require('./routes/about.js');
+const postRoute = require('./routes/post.js');
 
 
-var admin = require("firebase-admin");
+// var admin = require("firebase-admin");
 
-var serviceAccount = require("path/to/serviceAccountKey.json");
+// var serviceAccount = require("path/to/serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://dwa-exercise-four.firebaseio.com"
-});
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL: "https://dwa-exercise-four.firebaseio.com"
+// });
 
 
-var app = firebase.initializeApp({ ... });
 
 app.use('/', indexRoute);
-app.use('/about', aboutRoute);
+app.use('/about', postRoute);
 
 //--- Serve Static Images
 app.use('/static', express.static('public'));
