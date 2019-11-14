@@ -3,7 +3,7 @@ const router = express.Router();
 const firebase = require('firebase');
 
 const firebaseConfig = {
-	apiKey: "AIzaSyAOATYvVQp7H59BNrJRpNgjhz8iws1cB98",
+	apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "dwa-exercise-four.firebaseapp.com",
   databaseURL: "https://dwa-exercise-four.firebaseio.com",
   projectId: "dwa-exercise-four",
@@ -19,12 +19,12 @@ const db = firestoreDatabase.firestore();
 
 let posts = [];
 db.collection('blog-posts').get()
-	.then(
-		blogPosts => {
-			posts = blogPosts.data();
+	.then(blogPosts => {
+			blogposts.forEach(docs =>{
+				posts.push(docs.data());
+			});
 			console.log('blogPosts', blogPosts);
-		}
-	)
+		})
 	.catch(err => {
 		console.log('error',err);
 	})
