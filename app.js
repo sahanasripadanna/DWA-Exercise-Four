@@ -17,7 +17,7 @@ const postRoute = require('./routes/post.js');
 
 
 
-app.use('/', indexRoute);
+app.use('/index', indexRoute);
 app.use('/post', postRoute);
 
 //--- Serve Static Images
