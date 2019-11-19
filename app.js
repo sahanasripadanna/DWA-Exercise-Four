@@ -1,26 +1,19 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 4000;
+const path = require("path");
 
 const indexRoute = require('./routes/index.js');
 const postRoute = require('./routes/post.js');
+const submitRoute = require('./routes/submit.js');
+app.use(express.static(path.join(__dirname, "public")));
 
-
-// var admin = require("firebase-admin");
-
-// var serviceAccount = require("path/to/serviceAccountKey.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://dwa-exercise-four.firebaseio.com"
-// });
-
-
-
-app.use('/index', indexRoute);
+app.use('/', indexRoute);
 app.use('/post', postRoute);
+app.use('/submit', submitRoute);
+app.use('/submit-form', (req,res) =>
+	res.sendFile("/public/form.html", { root: __dirname})
+);
 
-//--- Serve Static Images
-app.use('/static', express.static('public'));
 app.listen(port, () => console.log(`Exercise Three is listening on port ${port}!`));
 

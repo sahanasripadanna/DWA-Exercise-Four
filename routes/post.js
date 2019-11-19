@@ -1,11 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
+const firebase = require('firebase');
 
-router.get('/', (req, res) => {
-	return(
-	res.send(`Reading Post from ${req.headers.host}`))
+
+var admin = require("firebase-admin");
+var serviceAccount = require("../service.json");
+
+const db = admin.firestore();
+
+router.get('/:id', (req, res) => {
+	db.collection('blog-posts').doc(req.params.id).get()
+	  .then(doc => {
+	    if (!doc.exists) {
+	      console.log('No such document!');
+	    } else {
+	      res.send(doc.data());
+	    }
+	  })
+	  .catch(err => {
+	   	console.log('Error getting document', err);
+	  });
 });
-router.get('/me', (req, res) => (res.send('About Me: i am hip')));
+
+
 
 module.exports = router;
+
+

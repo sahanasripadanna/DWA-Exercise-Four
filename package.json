@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "firebase": "^7.3.0"
+    "firebase": "^7.3.0",
+    "firebase-admin": "^8.7.0"
   },
   "bugs": {
     "url": "https://github.com/sahanasripadanna/DWA-Exercise-Four/issues"

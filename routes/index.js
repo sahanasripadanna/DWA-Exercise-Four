@@ -2,36 +2,33 @@ const express = require('express');
 const router = express.Router();
 const firebase = require('firebase');
 
-const firebaseConfig = {
-	apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: "dwa-exercise-four.firebaseapp.com",
-  databaseURL: "https://dwa-exercise-four.firebaseio.com",
-  projectId: "dwa-exercise-four",
-  // storageBucket: "dwa-exercise-four.appspot.com",
-  // messagingSenderId: "738299573084",
-  // appId: "1:738299573084:web:70629b2f2ede6108378799"
 
-};
+var admin = require("firebase-admin");
+var serviceAccount = require("../service.json");
 
-const firestoreDatabase = firebase.initializeApp(firebaseConfig);
-const db = firestoreDatabase.firestore();
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://dwa-exercise-four.firebaseio.com"
+});
 
-
-let posts = [];
-db.collection('blog-posts').get()
-	.then(blogPosts => {
-			blogposts.forEach(docs =>{
-				posts.push(docs.data());
-			});
-			console.log('blogPosts', blogPosts);
-		})
-	.catch(err => {
-		console.log('error',err);
-	})
-
+const db = admin.firestore();
 
 router.get('/', (req, res) => {
-	res.send(posts);
+	let posts = [];
+	db.collection('blog-posts').get()
+		.then(blogPosts => {
+				blogPosts.forEach(docs =>{
+					posts.push({
+						id: docs.id,
+						blog: docs.data()
+					});
+				});
+				res.send(posts);
+			})
+		.catch(err => {
+			console.log('error',err);
+		})
+	
 });
 
 module.exports = router;
